@@ -1,0 +1,275 @@
+/* SentimentPoint — market intelligence for life sciences.
+   Hand-authored; no framework. Tokens first, then layout, then type. */
+
+:root {
+  /* Cool, clinical ground rather than warm paper: this is analysis, not editorial. */
+  --ground:    #E9EDEB;
+  --paper:     #FFFFFF;
+  --ink:       #14201D;
+  --ink-soft:  #4E605A;
+  --rule:      #CBD4D0;
+  --accent:    #8C1D2C;   /* the red of medical publishing; used sparingly */
+
+  --serif: "Spectral", Georgia, "Times New Roman", serif;
+  --sans:  "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --measure: 68ch;
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+  --margin-col: 12rem;
+
+  --step--1: 0.875rem;
+  --step-0:  1.0625rem;
+  --step-1:  1.25rem;
+  --step-2:  1.6rem;
+  --step-3:  2.1rem;
+  --hero:    clamp(2.3rem, 6.2vw, 4.25rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- skip link ---------------------------------------------------------- */
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--ground);
+  padding: 0.6rem 1rem;
+  font-family: var(--sans);
+  font-size: var(--step--1);
+  z-index: 10;
+}
+.skip:focus { left: 0; }
+
+/* ---- shell -------------------------------------------------------------- */
+
+.shell {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Asymmetric grid: a narrow column for scope notes, a wide one for prose.
+   Collapses to a single column well before the notes would get cramped. */
+.row {
+  display: grid;
+  grid-template-columns: var(--margin-col) minmax(0, 1fr);
+  gap: 0 3.5rem;
+  align-items: start;
+}
+
+@media (max-width: 54rem) {
+  .row { grid-template-columns: 1fr; gap: 0; }
+  :root { --margin-col: 0; }
+}
+
+/* ---- masthead ----------------------------------------------------------- */
+
+.masthead {
+  padding: 1.75rem 0;
+}
+
+.masthead-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.wordmark {
+  font-family: var(--serif);
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.wordmark a { color: inherit; text-decoration: none; }
+
+.nav {
+  font-family: var(--sans);
+  font-size: var(--step--1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+}
+.nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+}
+.nav a:hover,
+.nav a:focus-visible { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* ---- hero --------------------------------------------------------------- */
+
+.hero {
+  padding: clamp(3rem, 9vw, 6rem) 0 clamp(2.5rem, 6vw, 4rem);
+}
+
+/* The single bold element on the page: the statement itself, set large with
+   tight leading and a short measure so it reads as a position, not a slogan. */
+.hero h1 {
+  font-size: var(--hero);
+  line-height: 1.08;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+.hero p {
+  max-width: var(--measure);
+  margin: 2rem 0 0;
+  font-size: var(--step-1);
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* ---- sections ----------------------------------------------------------- */
+
+.section {
+  padding: clamp(2.25rem, 4.5vw, 3.25rem) 0;
+  border-top: 1px solid var(--rule);
+}
+
+.section h2 {
+  font-family: var(--sans);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  margin: 0 0 0.35rem;
+}
+
+.prose { max-width: var(--measure); }
+.prose > :first-child { margin-top: 0; }
+.prose > :last-child { margin-bottom: 0; }
+.prose p { margin: 0 0 1.15em; }
+
+.lede {
+  font-size: var(--step-2);
+  line-height: 1.35;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 1.5rem;
+  max-width: 28ch;
+}
+
+/* Scope annotations in the margin. Real qualifiers, not category labels. */
+.note {
+  font-family: var(--sans);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.note + .note { margin-top: 1rem; }
+
+@media (max-width: 54rem) {
+  .note {
+    margin: 1.25rem 0 1.75rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--rule);
+  }
+}
+
+/* ---- services: a definition list, deliberately not cards ---------------- */
+
+.services {
+  margin: 0;
+  max-width: var(--measure);
+}
+.services div + div {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+}
+.services dt {
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4rem;
+}
+.services dd {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+/* ---- coverage ----------------------------------------------------------- */
+
+.coverage {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: var(--measure);
+  columns: 2;
+  column-gap: 2.5rem;
+}
+.coverage li {
+  break-inside: avoid;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+@media (max-width: 34rem) { .coverage { columns: 1; } }
+
+/* ---- contact ------------------------------------------------------------ */
+
+.contact-link {
+  font-size: var(--step-2);
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 2px;
+  letter-spacing: -0.01em;
+}
+.contact-link:hover,
+.contact-link:focus-visible { color: var(--accent); }
+
+/* ---- footer ------------------------------------------------------------- */
+
+.footer {
+  border-top: 1px solid var(--rule);
+  padding: 1.5rem 0 2.5rem;
+  font-family: var(--sans);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+.footer p { margin: 0; }
+
+/* ---- placeholder marker -------------------------------------------------
+   Anything still awaiting real copy is flagged so it cannot be published by
+   accident. Delete the .tbd class (or this rule) once the text is yours. */
+
+.tbd {
+  color: var(--ink-soft);
+  border-bottom: 1px dotted rgba(140, 29, 44, 0.55);
+}
+
+/* ---- baseline quality --------------------------------------------------- */
+
+a:focus-visible,
+.skip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
