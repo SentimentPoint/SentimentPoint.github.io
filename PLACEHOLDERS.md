@@ -14,7 +14,7 @@ When the whole page is done, delete the `.tbd` rule at the bottom of
 | Approach | Lede, one sentence | How you work, and why it beats a desk-research vendor |
 | Approach | Method paragraph | Where evidence comes from, how it's validated, what a client receives. This paragraph does most of the credibility work on the page |
 | Approach | Boundary paragraph (optional) | What you deliberately don't do — reads as confidence |
-| Services | Three names + two lines each | The question each service answers |
+| Services | Three descriptions | Names are yours and final: audience sentiment analysis, culture surveys, custom data gathering. The two-line descriptions under each are my drafts — correct or replace them |
 | Services | Engagement note (optional) | Typical length or format |
 | Coverage | Therapeutic areas | Replace the six placeholders; add or remove freely |
 | Coverage | Geography note (optional) | |
@@ -26,6 +26,15 @@ When the whole page is done, delete the `.tbd` rule at the bottom of
 - The headline and the sentence under it come from your existing site copy.
   The original read "Market intelligence and strategic for life science
   professionals" — the typo is fixed here.
+- The three service names are yours.
+
+## Open question
+
+The hero still frames the practice as life-science market intelligence, which
+is your original wording. But culture surveys are an organisational service
+rather than a competitive-market one, so the headline may now be narrower than
+what you actually sell. Worth deciding whether life sciences is the vertical
+you serve or the boundary of the offer.
 
 ## Deliberately not included
 
