@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+/* Typed so the browser treats drift amplitude as a number it can interpolate
+   rather than an opaque string. */
+@property --amp {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+:root {
+  --paper: #faf9f7;
+  --ink: #16161a;
+  --ink-soft: #6b6b70;
+  --hair: #e2e1dd;
+  --hair-strong: #b9b8b2;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-plex-mono);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ---- drift --------------------------------------------------------------
+   Continuous, slow, and owned by its own element so it never contends with
+   the scroll-driven transform on the parent. Amplitude is damped to zero
+   through --amp as the field resolves, which stops the motion without
+   stopping the animation — no jump when it settles. */
+
+@keyframes sp-drift {
+  from {
+    transform: translate3d(calc(var(--amp) * -7px), calc(var(--amp) * 5px), 0);
+  }
+  to {
+    transform: translate3d(calc(var(--amp) * 8px), calc(var(--amp) * -6px), 0);
+  }
+}
+
+.sp-drift {
+  animation-name: sp-drift;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  animation-iteration-count: infinite;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sp-drift {
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Copy still awaiting the client's words. Remove the class as each is filled. */
+.tbd {
+  border-bottom: 1px dotted #c86a6a;
+}
