@@ -11,7 +11,7 @@ import Phrase from "./Phrase";
 import { DOTS, MARKS, PHRASES } from "@/lib/phrases";
 
 /** Vertical spacing once a cluster aligns, and in the final stack. */
-const CLUSTER_GAP_VH = 4.2;
+const CLUSTER_GAP_VH = 4.8;
 const FINAL_GAP_VH = 6;
 
 function useMedia(query: string) {
@@ -44,6 +44,12 @@ export default function SentimentField() {
     offset: ["start start", "end end"],
   });
 
+  // The whole chaos-to-clarity arc now runs in the first 78% of the pinned
+  // range. The remaining 22% is dead air by design: the resolution holds,
+  // still and complete, before the stage unpins. Without this the headline
+  // arrived at the very last frame and scrolled straight off.
+  const arc = useTransform(scrollYProgress, [0, 0.78], [0, 1], { clamp: true });
+
   const phrases = useMemo(
     () => (isSmall ? PHRASES.filter((p) => p.mobile) : PHRASES),
     [isSmall],
@@ -70,12 +76,12 @@ export default function SentimentField() {
   }, [phrases]);
 
   // Drift amplitude: full at rest, gone by the time clusters form.
-  const amp = useTransform(scrollYProgress, [0.12, 0.5], [1, 0]);
+  const amp = useTransform(arc, [0.12, 0.5], [1, 0]);
   // The unfinished diagram fades before the clusters do.
-  const marks = useTransform(scrollYProgress, [0.08, 0.34], [1, 0]);
+  const marks = useTransform(arc, [0.08, 0.34], [1, 0]);
   // The resolution rises into the space the last three words vacate.
-  const heroOpacity = useTransform(scrollYProgress, [0.86, 0.97], [0, 1]);
-  const heroY = useTransform(scrollYProgress, [0.86, 1], reduced ? [0, 0] : [18, 0]);
+  const heroOpacity = useTransform(arc, [0.86, 0.99], [0, 1]);
+  const heroY = useTransform(arc, [0.86, 1], reduced ? [0, 0] : [18, 0]);
 
   const stageVh = isSmall ? 280 : 360;
 
@@ -114,7 +120,7 @@ export default function SentimentField() {
             key={p.text}
             data={p}
             index={i}
-            progress={scrollYProgress}
+            progress={arc}
             slotVh={slots.get(p.text) ?? 0}
             finalVh={finals.get(p.text) ?? 0}
             amp={amp}

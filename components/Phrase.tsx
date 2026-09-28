@@ -66,6 +66,17 @@ export default function Phrase({
       : [fromY, fromY - lift, toY, toY, endY],
   );
 
+  // As phrases align they converge on a common size. Depth stops being
+  // information once the field is ordered, and it is what made large phrases
+  // collide inside a slot sized for small ones. Scale, not font-size: this
+  // stays on the compositor.
+  const targetPx = data.survivor ? 26 : 17;
+  const scale = useTransform(
+    progress,
+    [0.18, 0.48],
+    reduced ? [1, 1] : [1, targetPx / plane.size],
+  );
+
   const rotate = useTransform(
     progress,
     [0.18, 0.45],
@@ -100,6 +111,7 @@ export default function Phrase({
         x: xv,
         y: yv,
         rotate,
+        scale,
         opacity,
         ["--amp" as string]: amp,
       }}

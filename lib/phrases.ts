@@ -51,9 +51,9 @@ export const PLANES = {
 
 /** Where each cluster gathers, in viewport percentages. */
 export const CLUSTERS: Record<Cluster, { x: number; y: number }> = {
-  0: { x: 26, y: 46 },
+  0: { x: 22, y: 46 },
   1: { x: 50, y: 50 },
-  2: { x: 74, y: 46 },
+  2: { x: 78, y: 46 },
 };
 
 export const PHRASES: Phrase[] = [
